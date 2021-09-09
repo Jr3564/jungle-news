@@ -11,7 +11,8 @@
     "node": "12"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon --watch src --exec babel-node src/app.js"
+    "dev": "cross-env NODE_ENV=development TOKEN_SECRET=top_secret nodemon --watch src --exec babel-node src/app.js",
+    "start": "node src/app.js"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
