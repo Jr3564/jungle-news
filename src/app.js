@@ -1,9 +1,9 @@
-const express = require('express')
+const express = require("express");
+const route = require("./routes");
 
-const app = express()
+const app = express();
+app.use(express.json());
 
-app.get('*', (req,res) => {
-  res.send('Hello World!')
-})
+route(app);
 
-app.listen(process.env.PORT || '8080')
+app.listen(process.env.PORT || "8080");
