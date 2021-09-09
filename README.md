@@ -35,4 +35,7 @@ Os desafios estão solucionados nos arquivos com extensão markdown. Esse format
     - Service
 
 
-A
+- Testando aplicação
+  - Rodando localmente
+  - Link do deploy
+
