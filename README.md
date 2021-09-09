@@ -8,16 +8,6 @@ Os desafios estão solucionados nos arquivos com extensão markdown. Esse format
 
 
 
-#### Libraries:
-
-- [bcryptjs](https://www.npmjs.com/package/bcryptjs)
-- [express](expressjs.com)
-- [jsonwebtoken](https://jwt.io/)
-- [knex](https://knexjs.org/) + [objection](https://vincit.github.io/objection.js/) (ORM)
-- [Docker Postgres Image](https://hub.docker.com/_/postgres)  (SGBD)
-
-
-
 ### Sumário
 
 - [Enunciado e readme original do desafio](./utils/originalReadme.md)
@@ -36,6 +26,19 @@ Os desafios estão solucionados nos arquivos com extensão markdown. Esse format
 
 
 - Testando aplicação
+
   - Rodando localmente
+
   - Link do deploy
 
+    
+
+---
+
+#### Libraries:
+
+- [bcryptjs](https://www.npmjs.com/package/bcryptjs)
+- [express](expressjs.com)
+- [jsonwebtoken](https://jwt.io/)
+- [knex](https://knexjs.org/) + [objection](https://vincit.github.io/objection.js/) (ORM)
+- [Docker Postgres Image](https://hub.docker.com/_/postgres)  (SGBD)
