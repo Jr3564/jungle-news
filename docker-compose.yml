@@ -1,9 +1,46 @@
-version: '3.0'
+version: "3.0"
 services:
+  api:
+    container_name: jungle-news
+    build: .
+    image: jungle-news
+    volumes:
+      - ./src:/usr/src/jungle-news/src
+    ports:
+      - "8080:8080"
+    restart: always
+    links:
+      - db
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_USER: postgres
+      DB_PASS: postgres
+      TOKEN_SECRET: top_secret
+      NODE_ENV: production
+      PORT: 8080
+
+    command: >
+      sh -c "npx knex migrate:latest --knexfile='./src/model/database/knex/knexfile.js'
+            npx knex seed:run --specific="initial_authors.js" --knexfile='./src/model/database/knex/knexfile.js'
+            npx knex seed:run --specific="initial_categories.js" --knexfile='./src/model/database/knex/knexfile.js'
+            npx knex seed:run --specific="initial_article.js" --knexfile='./src/model/database/knex/knexfile.js'
+            npx knex seed:run --specific="initial_access_levels.js" --knexfile='./src/model/database/knex/knexfile.js'
+            npx knex seed:run --specific="initial_users.js" --knexfile='./src/model/database/knex/knexfile.js'
+            npm start"
   db:
+    container_name: postgres-challenge-db
     image: postgres:10
+    restart: always
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
     environment:
-      POSTGRES_PASSWORD: "postgres"
-      POSTGRES_DB: "challenge"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: challenge
