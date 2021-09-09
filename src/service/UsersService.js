@@ -1,6 +1,6 @@
 const model = require("../model");
-const Encrypter = require("../utils/Encrypter");
-const TokenHandler = require("../utils/TokenHandler");
+const Encrypter = require("./authFeatures/Encrypter");
+const TokenHandler = require("./authFeatures/TokenHandler");
 
 module.exports = class {
   constructor() {

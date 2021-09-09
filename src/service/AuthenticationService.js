@@ -1,4 +1,4 @@
-const TokenHandler = require("../utils/TokenHandler");
+const TokenHandler = require("./authFeatures/TokenHandler");
 
 module.exports = class {
   static tokenVerify(token) {
