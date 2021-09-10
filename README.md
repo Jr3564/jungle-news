@@ -3,10 +3,37 @@ Olá, desde já agradeço a oportunidade.
 Os desafios estão solucionados nos arquivos com extensão markdown. Esse formato de arquivo pode ser aberto aqui no github mesmo. Caso precise de outro formato, por favor, entre em contato.
 
 ---
+# Sumário
 
-- #### Sumário
-
-[TOC]
+- [API](##API)
+    - [Rotas](###Rotas)
+        - [/login](####/login)
+        - [/sign-up](####/sign-up)
+        - [/authors](####/authors)
+        - [/categories](####/categories)
+        - [/articles](####/articles)
+        - [/admin/categories](####/admin/categories)
+        - [/admin/authors](####/admin/authors)
+        - [/admin/articles](####/admin/articles)
+        - [/admin/users](####/admin/users)
+  - [Controller](###Controller)
+  - [Middlewares](###Middlewares)
+    - [UserAuthentication](####UserAuthentication)
+        - [verifyAccessLevel](####verifyAccessLevel)
+        - [ensureAuthentication](####ensureAuthentication)
+        - [ensureAdminLevel](####ensureAdminLevel)
+     - [ErrorHandler](####ErrorHandler)
+  - [Service](###Service)
+    - [Encrypter](#####Encrypter)
+    - [TokenHandler](#####TokenHandler)
+  - [Model](###Model)
+    - [CRUDModel](#####CRUDModel)
+    - [database](#####database)
+- [Containers](##Containers)
+- [Banco de dados](##Bancodedados)
+    - [Estrutura](###Estrutura)
+- [Testando localmente a aplicação](##Testandolocalmenteaaplicação)
+- [Libraries](##Libraries)
 
 ---
 
@@ -254,7 +281,7 @@ Nela ficam todos os models, aonde ficam as lógicas das querys para o banco de d
 
 Essa teoricamente é uma classe abstrata com os comportamentos padrões de CRUD. Da qual as implementações herdam e especializam seus comportamentos.
 
-##### Pasta database
+##### database
 
 Nessa pasta fica a pasta do <u>knex</u> com suas configurações, migrations e seeds. E a pasta <u>objectRelationalMapper</u> que possui as configurações do [objection](https://vincit.github.io/objection.js/) ORM  e seus models, dos quais são geradas as querys.
 
@@ -286,7 +313,7 @@ E foi criado a tabela "users" que possui os dados do usuário e o id do nível d
 
 
 
-## Testando localment aplicação
+## Testando localmente a aplicação
 
 1. Clone o repositório
 
