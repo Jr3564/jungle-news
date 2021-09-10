@@ -429,4 +429,4 @@ E foi criado a tabela "users" que possui os dados do usuário e o id do nível d
 - [jsonwebtoken](https://jwt.io/)
 - [knex](https://knexjs.org/) + [objection](https://vincit.github.io/objection.js/) (ORM)
 - [Docker Postgres Image](https://hub.docker.com/_/postgres)  (SGBD)
--  [express-rescue](https://www.npmjs.com/package/express-rescue)
+- [express-rescue](https://www.npmjs.com/package/express-rescue)
