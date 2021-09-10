@@ -1,6 +1,7 @@
 const express = require("express");
 const controller = require("../controller");
 const middlewares = require("../middlewares");
+const rescue = require("express-rescue");
 
 const adminRouter = express.Router();
 const ensureAdminLevel = middlewares.UserAuthentication.ensureAdminLevel;
@@ -8,39 +9,39 @@ const { Articles, Categories, Authors, Users } = controller.AdminController;
 
 adminRouter
   .route("/articles")
-  .get(ensureAdminLevel, Articles.getAll)
-  .post(ensureAdminLevel, Articles.create);
+  .get(ensureAdminLevel, rescue(Articles.getAll))
+  .post(ensureAdminLevel, rescue(Articles.create));
 adminRouter
   .route("/articles/:id")
-  .put(ensureAdminLevel, Articles.update)
-  .delete(ensureAdminLevel, Articles.delete);
+  .put(ensureAdminLevel, rescue(Articles.update))
+  .delete(ensureAdminLevel, rescue(Articles.delete));
 
 adminRouter
   .route("/categories")
-  .get(ensureAdminLevel, Categories.getAll)
-  .post(ensureAdminLevel, Categories.create);
+  .get(ensureAdminLevel, rescue(Categories.getAll))
+  .post(ensureAdminLevel, rescue(Categories.create));
 adminRouter
   .route("/categories/:id")
-  .put(ensureAdminLevel, Categories.update)
-  .delete(ensureAdminLevel, Categories.delete);
+  .put(ensureAdminLevel, rescue(Categories.update))
+  .delete(ensureAdminLevel, rescue(Categories.delete));
 
 adminRouter
   .route("/authors")
-  .get(ensureAdminLevel, Authors.getAll)
-  .post(ensureAdminLevel, Authors.create);
+  .get(ensureAdminLevel, rescue(Authors.getAll))
+  .post(ensureAdminLevel, rescue(Authors.create));
 adminRouter
   .route("/authors/:id")
-  .put(ensureAdminLevel, Authors.update)
-  .delete(ensureAdminLevel, Authors.delete);
+  .put(ensureAdminLevel, rescue(Authors.update))
+  .delete(ensureAdminLevel, rescue(Authors.delete));
 
 adminRouter
   .route("/users")
-  .get(ensureAdminLevel, Users.getAll)
-  .post(ensureAdminLevel, Users.create);
+  .get(ensureAdminLevel, rescue(Users.getAll))
+  .post(ensureAdminLevel, rescue(Users.create));
 
 adminRouter
   .route("/users/:id")
-  .put(ensureAdminLevel, Users.update)
-  .delete(ensureAdminLevel, Users.delete);
+  .put(ensureAdminLevel, rescue(Users.update))
+  .delete(ensureAdminLevel, rescue(Users.delete));
 
 module.exports = adminRouter;
