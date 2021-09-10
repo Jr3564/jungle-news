@@ -1,3 +1,4 @@
+[🇺🇸 Read in English](./utils/README-EN.m)
 
 - [API](#API)
     - [Rotas](#Rotas)
