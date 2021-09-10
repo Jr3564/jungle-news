@@ -6,13 +6,9 @@ module.exports = class {
 
     const Service = new service.Categories(accessLevelId);
 
-    try {
-      const result = await Service.create(request.body);
+    const result = await Service.create(request.body);
 
-      response.status(201).json(result);
-    } catch ({ message }) {
-      response.status(666).json({ message });
-    }
+    response.status(service.statusCodes.CREATED).json(result);
   }
 
   static async getAll(request, response) {
@@ -20,13 +16,9 @@ module.exports = class {
 
     const Service = new service.Categories(accessLevelId);
 
-    try {
-      const result = await Service.getAll(request.body);
+    const result = await Service.getAll(request.body);
 
-      response.status(200).json(result);
-    } catch ({ message }) {
-      response.status(666).json({ message });
-    }
+    response.status(service.statusCodes.OK).json(result);
   }
 
   static async update(request, response) {
@@ -35,13 +27,9 @@ module.exports = class {
 
     const Service = new service.Categories(accessLevelId);
 
-    try {
-      const result = await Service.updateById(id, request.body);
+    const result = await Service.updateById(id, request.body);
 
-      response.status(200).json(result);
-    } catch ({ message }) {
-      response.status(666).json({ message });
-    }
+    response.status(service.statusCodes.OK).json(result);
   }
 
   static async delete(request, response) {
@@ -50,12 +38,8 @@ module.exports = class {
 
     const Service = new service.Categories(accessLevelId);
 
-    try {
-      const result = await Service.deleteById(id);
+    const result = await Service.deleteById(id);
 
-      response.status(200).json(result);
-    } catch ({ message }) {
-      response.status(666).json({ message });
-    }
+    response.status(service.statusCodes.OK).json(result);
   }
 };

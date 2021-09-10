@@ -6,24 +6,16 @@ module.exports = class {
 
     const Service = new service.Articles(accessLevelId);
 
-    try {
-      const articles = await Service.getAll(request.query);
+    const articles = await Service.getAll(request.query);
 
-      response.status(200).json(articles);
-    } catch ({ message }) {
-      response.status(666).json({ message });
-    }
+    response.status(service.statusCodes.OK).json(articles);
   }
   static async getById(request, response) {
     const { accessLevelId } = request.user;
 
     const Service = new service.Articles(accessLevelId);
 
-    try {
-      const article = await Service.getById(request.params.id);
-      response.status(200).json(article);
-    } catch ({ message }) {
-      response.status(666).json({ message });
-    }
+    const article = await Service.getById(request.params.id);
+    response.status(service.statusCodes.OK).json(article);
   }
 };
