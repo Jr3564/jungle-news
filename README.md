@@ -314,7 +314,7 @@ Gera, verifica e decodifica um token passado. Utiliza a biblioteca [jsonwebtoken
 
 ##### ErrorInstances
 
-Retorna um objeto com instâncias de erro. Essas instâncias são extensões da classe de erro.
+Retorna um objeto com instâncias de erro. Essas instâncias são extensões da classe de Error.
 
 
 
