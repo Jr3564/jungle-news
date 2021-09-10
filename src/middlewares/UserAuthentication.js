@@ -20,39 +20,35 @@ module.exports = class {
   }
 
   static async ensureAuthentication(request, response, next) {
-    try {
-      const authorization = request.headers.authorization;
+    const authorization = request.headers.authorization;
 
-      if (!authorization) throw new Error("Unauthorized!");
-      const [, token] = authorization.split(" ");
+    if (!authorization)
+      throw new service.ErrorInstance.Unauthorized("Unauthorized!");
 
-      const { accessLevelId, userId } =
-        service.Authentication.tokenVerify(token).tokenDecode(token);
+    const [, token] = authorization.split(" ");
 
-      request.user = { userId, accessLevelId };
+    const { accessLevelId, userId } =
+      service.Authentication.tokenVerify(token).tokenDecode(token);
 
-      return next();
-    } catch ({ message }) {
-      return response.status(401).json({ message });
-    }
+    request.user = { userId, accessLevelId };
+
+    return next();
   }
 
   static async ensureAdminLevel(request, response, next) {
-    try {
-      const authorization = request.headers.authorization;
+    const authorization = request.headers.authorization;
 
-      if (!authorization) throw new Error("Unauthorized!");
-      const [, token] = authorization.split(" ");
+    if (!authorization)
+      throw new service.ErrorInstance.Unauthorized("Unauthorized!");
+    const [, token] = authorization.split(" ");
 
-      const { accessLevelId, userId } =
-        service.Authentication.tokenVerify(token).tokenDecode(token);
+    const { accessLevelId, userId } =
+      service.Authentication.tokenVerify(token).tokenDecode(token);
 
-      if (accessLevelId !== 1) throw new Error("Unauthorized!");
-      request.user = { userId, accessLevelId };
+    if (accessLevelId !== 1)
+      throw new service.ErrorInstance.Unauthorized("Unauthorized!");
+    request.user = { userId, accessLevelId };
 
-      return next();
-    } catch ({ message }) {
-      return response.status(401).json({ message });
-    }
+    return next();
   }
 };
