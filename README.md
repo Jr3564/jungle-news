@@ -3,41 +3,39 @@ Olá, desde já agradeço a oportunidade.
 Os desafios estão solucionados nos arquivos com extensão markdown. Esse formato de arquivo pode ser aberto aqui no github mesmo. Caso precise de outro formato, por favor, entre em contato.
 
 ---
-## Sumário
-
-[API](##api)
-    [Rotas](###rotas)
-        [/login](####/login)
-        [/sign-up](####/sign-up)
-        [/authors](####/authors)
-        [/categories](####/categories)
-        [/articles](####/articles)
-        [/admin/categories](####/admin/categories)
-        [/admin/authors](####/admin/authors)
-        [/admin/articles](####/admin/articles)
-        [/admin/users](####/admin/users)
-  [Controller](###controller)
-  [Middlewares](###middlewares)
-    [UserAuthentication](####userauthentication)
-        [verifyAccessLevel](####verifyAccessLevel)
-        [ensureAuthentication](####ensureAuthentication)
-        [ensureAdminLevel](####ensureAdminLevel)
-     [ErrorHandler](####ErrorHandler)
-  [Service](###Service)
-    [Encrypter](#####Encrypter)
-    [TokenHandler](#####TokenHandler)
-  [Model](###Model)
-    [CRUDModel](#####CRUDModel)
-    [database](#####database)
-[Containers](##Containers)
-[Banco de dados](##Bancodedados)
-    [Estrutura](###Estrutura)
-[Testando localmente a aplicação](##Testandolocalmenteaaplicação)
-[Libraries](##Libraries)
+- [API](##API)
+    - [Rotas](###Rotas)
+        - [/login](####/login)
+        - [/sign-up](####/sign-up)
+        - [/authors](####/authors)
+        - [/categories](####/categories)
+        - [/articles](####/articles)
+        - [/admin/categories](####/admin/categories)
+        - [/admin/authors](####/admin/authors)
+        - [/admin/articles](####/admin/articles)
+        - [/admin/users](####/admin/users)
+  - [Controller](###Controller)
+  - [Middlewares](###Middlewares)
+    - [UserAuthentication](####UserAuthentication)
+        - [verifyAccessLevel](####verifyAccessLevel)
+        - [ensureAuthentication](####ensureAuthentication)
+        - [ensureAdminLevel](####ensureAdminLevel)
+     - [ErrorHandler](####ErrorHandler)
+  - [Service](###Service)
+    - [Encrypter](#####Encrypter)
+    - [TokenHandler](#####TokenHandler)
+  - [Model](###Model)
+    - [CRUDModel](#####CRUDModel)
+    - [database](#####database)
+- [Containers](##Containers)
+- [Banco de dados](##Bancodedados)
+    - [Estrutura](###Estrutura)
+- [Testando localmente a aplicação](##Testandolocalmenteaaplicação)
+- [Libraries](##Libraries)
 
 ---
 
-## API
+## API [](#){name=API}
 
 A api foi construída utilizando a arquitetura MVC, utilizando as camadas model, controller, service e a camada de middlewares.
 
