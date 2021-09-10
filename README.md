@@ -20,6 +20,7 @@
   - [Service](#Service)
     - [Encrypter](#Encrypter)
     - [TokenHandler](#TokenHandler)
+    - [ErrorInstances](#ErrorInstances)
   - [Model](#Model)
     - [CRUDModel](#CRUDModel)
     - [database](#database)
@@ -245,7 +246,7 @@ Exemplos:
 
 ### Controller
 
-O controller está dividido entre as camadas de Admin, Articles, Authors, Categories e Users. Que recebem as requisições e chamam a camada service e o o método adequado para tratá-la. Após a requisição ser tratada pela camada de service, é devolvida para o controler e retornada a solicitação com o conteúdo solicitado e o status code adequado. No caso de erro, é passado para próxima camada a <u>ErrorHandler</u>.
+O controller está dividido entre as camadas de Admin, Articles, Authors, Categories e Users. Que recebem as requisições e chamam a camada service e o o método adequado para tratá-la. Após a requisição ser tratada pela camada de service, é devolvida para o controler e retornada a solicitação com o conteúdo solicitado e o status code adequado. No caso de erro, é passado para próxima camada a <u>[ErrorHandler](#ErrorHandler)</u>.
 
 <div id='Middlewares'/>
 
@@ -283,7 +284,9 @@ Garante que só irá para a próxima camada um usuário com nível de acesso de 
 
 #### ErrorHandler
 
-Caso em algum momento, seja levantado algum erro na aplicação, este middleware responde a solicitação com a mensagem contida no erro e com o status code adequado.
+Funciona em conjunto com a bibliotéca [express-rescue](https://www.npmjs.com/package/express-rescue), garantindo que os erros asynchronos sejam direcionados para a camada de erros.  E quando o erro chega ao ErrorHandler ele responde com o status code adequado e a mensagem contida na classe de erro levantada. 
+
+
 
 <div id='Service'/>
 
@@ -306,6 +309,14 @@ Utiliza a biblioteca [bcryptjs](https://www.npmjs.com/package/bcryptjs) para tra
 ##### TokenHandler
 
 Gera, verifica e decodifica um token passado. Utiliza a biblioteca [jsonwebtoken](https://jwt.io/).
+
+<div id='ErrorInstances'/>
+
+##### ErrorInstances
+
+Retorna um objeto com instâncias de erro. Essas instâncias são extensões da classe de erro.
+
+
 
 <div id='Model'/>
 
@@ -413,3 +424,4 @@ E foi criado a tabela "users" que possui os dados do usuário e o id do nível d
 - [jsonwebtoken](https://jwt.io/)
 - [knex](https://knexjs.org/) + [objection](https://vincit.github.io/objection.js/) (ORM)
 - [Docker Postgres Image](https://hub.docker.com/_/postgres)  (SGBD)
+-  [express-rescue](https://www.npmjs.com/package/express-rescue)
