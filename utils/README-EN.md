@@ -379,7 +379,7 @@ E foi criado a tabela "users" que possui os dados do usuário e o id do nível d
 
 ## Testing locally
 
-1. Clone o repositório
+1. Clone the repository
 
 - ssh:
 
@@ -393,31 +393,30 @@ E foi criado a tabela "users" que possui os dados do usuário e o id do nível d
   git clone https://github.com/Jr3564/jungle-news.git
   ```
 
-2.  Navegue até a pasta
+2. Enter the folder
 
    ```bash
    cd ./jungle-news/
    ```
 
-3. E subir os containers
+3. Up containers
 
    ```bash
    docker-compose up
    ```
 
-   - Para parar precione ctrl + c .
+   - To stop, press ctrl + c .
 
-   - Se quiser que rode em segundo plano, acrescente -d ao comando.
+   - To running in background, add -d to command.
 
-4. Pronto, a api já está rodando.
+4. Perfect, the api is running
 
-5.  Para desmontar as imagens.
+5. To stop and remove containers
 
    ```bash
    docker-compose down
    ```
 
-6. Se for utilizar o postman. Disponibilizei o arquivo [postman_collection](./utils/postman_collection.json) a coleção que utilizei para testar as rotas.
 
 <div id='libraries'/>
 
