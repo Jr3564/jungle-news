@@ -1,55 +1,58 @@
-[🇺🇸 Read in English](./utils/README-EN.md)
-
-- [API](#API)
-    - [Rotas](#Rotas)
-        - [/login](#/login)
-        - [/sign-up](#/sign-up)
-        - [/authors](#/authors)
-        - [/categories](#/categories)
-        - [/articles](#/articles)
-        - [/admin/categories](#/admin/categories)
-        - [/admin/authors](#/admin/authors)
-        - [/admin/articles](#/admin/articles)
-        - [/admin/users](#/admin/users)
-  - [Controller](#Controller)
-  - [Middlewares](#Middlewares)
-    - [UserAuthentication](#UserAuthentication)
-        - [verifyAccessLevel](#verifyAccessLevel)
-        - [ensureAuthentication](#ensureAuthentication)
-        - [ensureAdminLevel](#ensureAdminLevel)
-     - [ErrorHandler](#ErrorHandler)
-  - [Service](#Service)
-    - [Encrypter](#Encrypter)
-    - [TokenHandler](#TokenHandler)
-    - [ErrorInstances](#ErrorInstances)
-  - [Model](#Model)
-    - [CRUDModel](#CRUDModel)
-    - [database](#database)
-- [Containers](#Containers)
-- [Banco de dados](#Banco-de-dados)
-    - [Estrutura](#Estrutura)
-- [Testando localmente a aplicação](#Testando-localmentea-a-aplicação)
-- [Libraries](#Libraries)
+[🇧🇷Ler em Português-BR](./utils/README-EN.m)
 
 ---
 
-<div id='API'/>
+- [API](#api)
+  - [Routes](#routes)
+    - [/login](#login)
+    - [/sign-up](#sign-up)
+    - [/authors](#authors)
+    - [/categories](#categories)
+    - [/articles](#articles)
+    - [/admin/categories](#admincategories)
+    - [/admin/authors](#adminauthors)
+    - [/admin/articles](#adminarticles)
+    - [/admin/users](#adminusers)
+  - [Controller](#controller)
+  - [Middlewares](#middlewares)
+    - [UserAuthentication](#userauthentication)
+      - [verifyAccessLevel](#verifyaccesslevel)
+      - [ensureAuthentication](#ensureauthentication)
+      - [ensureAdminLevel](#ensureadminlevel)
+    - [ErrorHandler](#errorhandler)
+  - [Service](#service)
+      - [Encrypter](#encrypter)
+      - [TokenHandler](#tokenhandler)
+      - [ErrorInstances](#errorinstances)
+  - [Model](#model)
+      - [CRUDModel](#crudmodel)
+      - [database](#database)
+- [Containers](#containers)
+- [Data Base](#data-base)
+  - [Structure](#structure)
+- [Testing locally](#testing-locally)
+- [Libraries](#libraries)
+
+---
+
+<div id='api'/>
 
 ## API
+The API was built using the MVC architecture. Its main layers are [Controller](#Controller), [Middlewares](#Middlewares), [Service](#Service) and [Model](#Model).
 
-A api foi construída utilizando a arquitetura MVC, utilizando as camadas model, controller, service e a camada de middlewares.
+<div id='routes'/>
 
-<div id='Rotas'/>
+### Routes
 
-### Rotas
-
-Para testes utilizando postman, disponibilizei na pasta utils a [postman_collection.json](./utils/) com os testes feitos nas rotas.
+For testing using [postman](https://www.postman.com/), available in the 'utils' folder the file with the tests performed on each route.  [postman_collection.json](./utils/).
 
 <div id='/login'/>
 
 #### /login
 
-Exemplo:
+Accepted methods: Post
+
+Example:
 
 - Post localhost:8080/api/login
 
@@ -66,7 +69,9 @@ Exemplo:
 
 #### /sign-up
 
-Exemplo:
+Accepted methods: Post
+
+Example:
 
 - Post localhost:8080/api/sign-up
 
@@ -84,9 +89,9 @@ Exemplo:
 
 #### /authors
 
-Método: Get
+Accepted methods: Get
 
-Exemplo:
+Example:
 
 - Get localhost:8080/api/authors
 
@@ -96,9 +101,9 @@ Exemplo:
 
 #### /categories
 
-Método: Get
+Accepted methods: Get
 
-Exemplo: 
+Example: 
 
 - Get localhost:8080/api/categories
 
@@ -108,9 +113,9 @@ Exemplo:
 
 #### /articles
 
-Método: Get || Get:id || Get?category=categoryId&author=authorId
+Accepted methods: Get || Get:id || Get?category=categoryId&author=authorId
 
-Exemplos:
+Examples:
 
 - Get localhost:8080/api/articles
 - Get:id localhost:8080/api/articles/1
@@ -125,7 +130,7 @@ Exemplos:
 
 Métodos Get || Post || Put:id || Delete:id
 
-Exemplos:
+Examples:
 
 -  Get localhost:8080/api/admin/categories
 - Delete:id localhost:8080/api/admin/categories/1
@@ -151,9 +156,9 @@ Exemplos:
 
 #### /admin/authors
 
-Métodos: Get || Post || Put:id || Delete:id
+Accepted methods: Get || Post || Put:id || Delete:id
 
-Exemplos:
+Examples:
 
 - Get localhost:8080/api/admin/authors
 - Delete:id localhost:8080/api/admin/authors/1
@@ -180,9 +185,9 @@ Exemplos:
 
 #### /admin/articles
 
-Métodos: Get || Post || Get?category=categoryId&author=authorId || Put:id || Delete:id
+Accepted methods: Get || Post || Get?category=categoryId&author=authorId || Put:id || Delete:id
 
-Exemplos:
+Examples:
 
 - Get  localhost:8080/api/admin/articles
 - Get?categoryId localhost:8080/api/admin/articles?category=1
@@ -215,9 +220,9 @@ Exemplos:
 
 #### /admin/users
 
-Métodos: Get || Post || Put:id || Delete:id
+Accepted methods: Get || Post || Put:id || Delete:id
 
-Exemplos:
+Examples:
 
 - Get localhost:8080/api/admin/users
 - Delete:id localhost:8080/api/admin/users/2
@@ -349,17 +354,17 @@ Foi criado um dockerfile para montar um container com a api e instalar as depend
 
 Após o  serviço do banco de dados for iniciado, é feito o teste com healthcheck para garantir que está  no ar, sendo possível adicionar a condição à api. Garantindo que ela só seja iniciada quando o banco de dados estiver rodando como o esperado. Isso foi necessário pois para garantir a praticidade nos testes, foram criadas migrations e seeds. Eles só pode ser executados quando o banco de dados já tiver subido e em uma ordem conforme as relações das tabelas.
 
-<div id='Banco-de-dados'/>
+<div id='data-base'/>
 
 ---
 
-## Banco de dados
+## Data Base
 
 Foi utilizado um container, com o Postgres que já veio configurado no projeto.  Nessas configurações só foi necessário adicionar a propriedade healthcheck, para ter controle da hora que o banco terminava de subir e garantir que as migarions e os seeder sejam executados no momento certo.
 
-<div id='Estrutura'/>
+<div id='structure'/>
 
-### Estrutura
+### Structure
 
 Foi criada a "articles" que possui todos os dados dos artigos, o id da categoria e o id do author. A ideia inicial era criar uma relação de 1:n categorias, mas como o enunciado solicitou uma categoria para cada arquivo foi respeitado.
 
@@ -368,11 +373,11 @@ E foi criado a tabela "users" que possui os dados do usuário e o id do nível d
 ![](/home/rodolfo/Documentos/Projetos/node-challenge-001/utils/readme/retationalBD.png)
 
 
-<div id='Testando-localmentea-a-aplicação'/>
+<div id='testing-locally'/>
 
 ---
 
-## Testando localmente a aplicação
+## Testing locally
 
 1. Clone o repositório
 
@@ -414,7 +419,7 @@ E foi criado a tabela "users" que possui os dados do usuário e o id do nível d
 
 6. Se for utilizar o postman. Disponibilizei o arquivo [postman_collection](./utils/postman_collection.json) a coleção que utilizei para testar as rotas.
 
-<div id='Libraries'/>
+<div id='libraries'/>
 
 ---
 
