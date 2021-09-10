@@ -1,4 +1,5 @@
 const model = require("../model");
+const { BadRequest } = require("./ErrorInstance.js");
 
 module.exports = class {
   constructor(accessLevelId) {
@@ -26,31 +27,25 @@ module.exports = class {
   }
 
   create(article) {
-    // Achar um lugar melhor par isso
-    const expectedKeys = new Set([
-      "title",
-      "summary",
-      "firstParagraph",
-      "body",
-      "categoryId",
-      "authorId",
-    ]);
-    const isSuperset = (subset, set) => {
-      let isSuper = true;
+    const fieldsAreMissing =
+      !article.title ||
+      !article.summary ||
+      !article.firstParagraph ||
+      !article.body ||
+      !article.categoryId ||
+      !article.authorId;
 
-      for (let key of subset) {
-        if (!set.has(key)) {
-          isSuper = false;
-          break;
-        }
-      }
-      return isSuper;
-    };
-    // Achar um lugar melhor par isso
-    if (!isSuperset(Object.keys(article), expectedKeys))
-      throw new Error(
-        "Encontrar um erro para dizer que faltaram chaves para criar"
-      );
+    if (fieldsAreMissing) {
+      const errorMessage = `The ${
+        (!article.title && "title") ||
+        (!article.summary && "summary") ||
+        (!article.firstParagraph && "firstParagraph") ||
+        (!article.body && "body") ||
+        (!article.categoryId && "categoryId") ||
+        (!article.authorId && "authorId")
+      } key is is mandatory`;
+      throw new BadRequest(errorMessage);
+    }
 
     return this._Model.create(article);
   }

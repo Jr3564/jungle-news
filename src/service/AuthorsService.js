@@ -1,4 +1,5 @@
 const model = require("../model");
+const { BadRequest } = require("./ErrorInstance");
 
 module.exports = class {
   constructor() {
@@ -6,6 +7,12 @@ module.exports = class {
   }
 
   async create({ name, imagePath }) {
+    if (!name || !imagePath)
+      throw new BadRequest(
+        `The ${
+          (!name && "name") || (!imagePath && "imagePath")
+        } key is is mandatory`
+      );
     return this.Model.create({ name, imagePath });
   }
 
