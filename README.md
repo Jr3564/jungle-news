@@ -1,8 +1,6 @@
-[🇺🇸 Read in English](./utils/README-EN.md)(Under building...)
+[🇺🇸 Read in English](./README.en.md)(under review..)
 
 ---
-
-
 
 ###  Sumário
 
@@ -36,6 +34,7 @@
 - [Containers](#Containers)
 - [Banco de dados](#Banco-de-dados)
     - [Estrutura](#Estrutura)
+- [Deploy](#Deploy)
 - [Testando localmente a aplicação](#Testando-localmentea-a-aplicação)
 - [Libraries](#Libraries)
 
@@ -358,7 +357,6 @@
     E foi criado a tabela "users" que possui os dados do usuário e o id do nível de acesso, que é uma foreign key da tabela access_levels, a qual contém os níveis de acesso.
 
     ![](/home/rodolfo/Documentos/Projetos/node-challenge-001/utils/readme/retationalBD.png)
-
 ---
 
 <div id='Testando-localmentea-a-aplicação'/>
