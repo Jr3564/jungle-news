@@ -9,7 +9,7 @@ class BadRequest {
 
 class UnprocessableEntity {
   constructor(message) {
-    this.message = message || "Bad Request";
+    this.message = message || "Unprocessable Entity";
     this.statusCode = statusCode.UNPROCESSABLE_ENTITY;
   }
 }

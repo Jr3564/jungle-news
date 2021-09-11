@@ -44,4 +44,6 @@ adminRouter
   .put(ensureAdminLevel, rescue(Users.update))
   .delete(ensureAdminLevel, rescue(Users.delete));
 
+adminRouter.use(middlewares.errorHandler);
+
 module.exports = adminRouter;

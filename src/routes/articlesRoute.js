@@ -17,4 +17,6 @@ articlesRouter
   .route("/:id")
   .get(verifyAccessLevel, rescue(ArticlesController.getById));
 
+articlesRouter.use(middlewares.errorHandler);
+
 module.exports = articlesRouter;

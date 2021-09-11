@@ -19,7 +19,7 @@ module.exports = class {
     }
   }
 
-  static async ensureAuthentication(request, response, next) {
+  static async ensureAuthentication(request, _response, next) {
     const authorization = request.headers.authorization;
 
     if (!authorization)
@@ -35,7 +35,7 @@ module.exports = class {
     return next();
   }
 
-  static async ensureAdminLevel(request, response, next) {
+  static async ensureAdminLevel(request, _response, next) {
     const authorization = request.headers.authorization;
 
     if (!authorization)
