@@ -9,40 +9,40 @@ const { Articles, Categories, Authors, Users } = controller.AdminController;
 
 adminRouter
   .route("/articles")
-  .get(ensureAdminLevel, rescue(Articles.getAll))
-  .post(ensureAdminLevel, rescue(Articles.create));
+  .get(rescue(ensureAdminLevel), rescue(Articles.getAll))
+  .post(rescue(ensureAdminLevel), rescue(Articles.create));
 adminRouter
   .route("/articles/:id")
-  .put(ensureAdminLevel, rescue(Articles.update))
-  .delete(ensureAdminLevel, rescue(Articles.delete));
+  .put(rescue(ensureAdminLevel), rescue(Articles.update))
+  .delete(rescue(ensureAdminLevel), rescue(Articles.delete));
 
 adminRouter
   .route("/categories")
-  .get(ensureAdminLevel, rescue(Categories.getAll))
-  .post(ensureAdminLevel, rescue(Categories.create));
+  .get(rescue(ensureAdminLevel), rescue(Categories.getAll))
+  .post(rescue(ensureAdminLevel), rescue(Categories.create));
 adminRouter
   .route("/categories/:id")
-  .put(ensureAdminLevel, rescue(Categories.update))
-  .delete(ensureAdminLevel, rescue(Categories.delete));
+  .put(rescue(ensureAdminLevel), rescue(Categories.update))
+  .delete(rescue(ensureAdminLevel), rescue(Categories.delete));
 
 adminRouter
   .route("/authors")
-  .get(ensureAdminLevel, rescue(Authors.getAll))
-  .post(ensureAdminLevel, rescue(Authors.create));
+  .get(rescue(ensureAdminLevel), rescue(Authors.getAll))
+  .post(rescue(ensureAdminLevel), rescue(Authors.create));
 adminRouter
   .route("/authors/:id")
-  .put(ensureAdminLevel, rescue(Authors.update))
-  .delete(ensureAdminLevel, rescue(Authors.delete));
+  .put(rescue(ensureAdminLevel), rescue(Authors.update))
+  .delete(rescue(ensureAdminLevel), rescue(Authors.delete));
 
 adminRouter
   .route("/users")
-  .get(ensureAdminLevel, rescue(Users.getAll))
-  .post(ensureAdminLevel, rescue(Users.create));
+  .get(rescue(ensureAdminLevel), rescue(Users.getAll))
+  .post(rescue(ensureAdminLevel), rescue(Users.create));
 
 adminRouter
   .route("/users/:id")
-  .put(ensureAdminLevel, rescue(Users.update))
-  .delete(ensureAdminLevel, rescue(Users.delete));
+  .put(rescue(ensureAdminLevel), rescue(Users.update))
+  .delete(rescue(ensureAdminLevel), rescue(Users.delete));
 
 adminRouter.use(middlewares.errorHandler);
 
