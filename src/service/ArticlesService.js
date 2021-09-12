@@ -6,8 +6,8 @@ module.exports = class {
     this._Model = new model.Articles();
     this._accessLevelId = accessLevelId;
     this._keysReturn = this._accessLevelId
-      ? ["title", "summary", "firstParagraph", "body"]
-      : ["title", "summary", "firstParagraph"];
+      ? ["title", "summary", "firstParagraph", "body", "category"]
+      : ["title", "summary", "firstParagraph", "category"];
   }
 
   getAll({ categoryId, authorId }) {

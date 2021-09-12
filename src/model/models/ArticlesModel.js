@@ -10,6 +10,7 @@ module.exports = class extends CRUDModel {
       summary: "art_summary",
       body: "art_body",
       categoryId: "category_id",
+      category: "cat_name",
       authorId: "author_id",
       id: "art_id",
     };
@@ -23,11 +24,13 @@ module.exports = class extends CRUDModel {
   defaultQuery(returnKeys, queryBuilder = () => {}) {
     return this._Instance
       .query()
-      .withGraphJoined("[category, author]")
+      .innerJoin(
+        "categories as category",
+        "articles.category_id",
+        "category.cat_id"
+      )
+      .withGraphJoined("author")
       .where(queryBuilder)
-      .modifyGraph("category", (builder) => {
-        builder.select("cat_name as category").from("categories");
-      })
       .modifyGraph("author", (builder) => {
         builder
           .select("aut_name as name", "aut_image_path as picture")
