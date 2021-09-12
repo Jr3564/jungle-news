@@ -28,7 +28,7 @@ services:
             npx knex seed:run --specific="initial_article.js" --knexfile='./src/model/database/knex/knexfile.js'
             npx knex seed:run --specific="initial_access_levels.js" --knexfile='./src/model/database/knex/knexfile.js'
             npx knex seed:run --specific="initial_users.js" --knexfile='./src/model/database/knex/knexfile.js'
-            npm production"
+            npm start"
   db:
     container_name: postgres-challenge-db
     image: postgres:10

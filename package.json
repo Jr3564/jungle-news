@@ -12,8 +12,7 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development TOKEN_SECRET=top_secret nodemon --watch src --exec babel-node src/app.js",
-    "production": "node src/app.js",
-    "start": "docker-compose up"
+    "start": "node src/app.js"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
