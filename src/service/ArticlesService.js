@@ -12,11 +12,21 @@ module.exports = class {
 
   getAll({ category, author }) {
     if (category || author) {
-      return this._Model.getFilteredByCategoryIdOrAuthorId(category, author, [
-        "title",
-        "summary",
-        "category",
-      ]);
+      const keysReturn = ["title", "summary", "category"];
+      // Para o caso de recebeu a string
+      if ((category && isNaN(category)) || (author && isNaN(author))) {
+        return this._Model.getFilteredByCategoryOrAuthor(
+          category,
+          author,
+          keysReturn
+        );
+      }
+      // Ao receber o id
+      return this._Model.getFilteredByCategoryIdOrAuthorId(
+        category,
+        author,
+        keysReturn
+      );
     } else {
       return this._Model.getAll(this._keysReturn);
     }
