@@ -64,15 +64,15 @@ module.exports = class extends CRUDModel {
     return this.defaultQuery(returnKeys, matchName);
   }
 
-  getFilteredByCategoryIdOrAuthorId(category, author, keysReturn) {
+  getFilteredByCategoryIdOrAuthorId(categoryId, authorId, keysReturn) {
     const returnKeys = this.keysRename(
       keysReturn || this.defaultReturnKeys,
       this.keysMap
     );
     const matchName = (builder) => {
       builder
-        .where("category_id", category || -1)
-        .orWhere("author_id", author || -1);
+        .where("category_id", categoryId || -1)
+        .orWhere("author_id", authorId || -1);
     };
 
     return this.defaultQuery(returnKeys, matchName);

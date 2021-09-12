@@ -104,8 +104,10 @@
       - Exemplos:
         - Get localhost:8080/api/articles
         - Get:id localhost:8080/api/articles/1
-        - Get?categoryId localhost:8080/api/articles?category=1
-        - Get?author localhost:8080/api/articles?author=1
+        - Get?categoryId localhost:8080/api/articles?categoryId=1
+        - Get?authorId localhost:8080/api/articles?authorId=1
+        - Get?author localhost:8080/api/articles?author=Rodolfo
+        - Get?category localhost:8080/api/articles?category=software
       ---
 
     <div id='/admin/categories'/>
@@ -157,8 +159,10 @@
       - Método: Get || Post || Put:id || Delete:id
       - Exemplos:
         - Get localhost:8080/api/admin/articles
-        - Get?categoryId localhost:8080/api/admin/articles?category=1
-        - Get?author localhost:8080/api/admin/articles?author=1
+        - Get?author localhost:8080/api/admin/articles?author=Rodolfo
+        - Get?category localhost:8080/api/admin/articles?category=software
+        - Get?categoryId localhost:8080/api/admin/articles?categoryId=1
+        - Get?authorId localhost:8080/api/admin/articles?authorId=1
         - Delete:id  localhost:8080/api/admin/articles/1
         - Post  localhost:8080/api/admin/articles
           ```json

@@ -10,26 +10,23 @@ module.exports = class {
       : ["title", "summary", "firstParagraph", "category"];
   }
 
-  getAll({ category, author }) {
+  getAll({ category, author, categoryId, authorId }) {
+    const keysReturnByQuery = ["title", "summary", "category"];
+    console.log(category, author, categoryId, authorId);
     if (category || author) {
-      const keysReturn = ["title", "summary", "category"];
-      // Para o caso de recebeu a string
-      if ((category && isNaN(category)) || (author && isNaN(author))) {
-        return this._Model.getFilteredByCategoryOrAuthor(
-          category,
-          author,
-          keysReturn
-        );
-      }
-      // Ao receber o id
-      return this._Model.getFilteredByCategoryIdOrAuthorId(
+      return this._Model.getFilteredByCategoryOrAuthor(
         category,
         author,
-        keysReturn
+        keysReturnByQuery
       );
-    } else {
-      return this._Model.getAll(this._keysReturn);
+    } else if (categoryId || authorId) {
+      return this._Model.getFilteredByCategoryIdOrAuthorId(
+        categoryId,
+        authorId,
+        keysReturnByQuery
+      );
     }
+    return this._Model.getAll(this._keysReturn);
   }
 
   getById(articleId) {
