@@ -85,7 +85,7 @@ module.exports = class extends CRUDModel {
     );
     const matchName = (builder) => {
       builder
-        .where("cat_name", category?.toLowerCase() || "")
+        .where("cat_name", (category && category.toLowerCase()) || "")
         .orWhere("name", author || "");
       return;
     };
