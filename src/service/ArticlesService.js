@@ -10,13 +10,13 @@ module.exports = class {
       : ["title", "summary", "firstParagraph", "category"];
   }
 
-  getAll({ categoryId, authorId }) {
-    if (categoryId || authorId) {
-      return this._Model.getFilteredByCategoryIdOrAuthorId(
-        categoryId,
-        authorId,
-        this._keysReturn
-      );
+  getAll({ category, author }) {
+    if (category || author) {
+      return this._Model.getFilteredByCategoryIdOrAuthorId(category, author, [
+        "title",
+        "summary",
+        "category",
+      ]);
     } else {
       return this._Model.getAll(this._keysReturn);
     }
