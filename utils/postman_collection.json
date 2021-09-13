@@ -19,7 +19,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImFjY2Vzc0xldmVsSWQiOjEsImlhdCI6MTYzMTE5Mjc0OSwiZXhwIjoxNjMxNzk3NTQ5fQ.OrYNQnftZvRBsPzjP28gQD9UDFco5YsBU1k0K86flYU",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImFjY2Vzc0xldmVsSWQiOjEsImlhdCI6MTYzMTI5MTYwOSwiZXhwIjoxNjMxODk2NDA5fQ.-0p7xzWBIuCCLsPGpYdGj6Cb8FBA3SSXgAILcv9kLmY",
 											"type": "string"
 										}
 									]
@@ -28,7 +28,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "\n{\n    \"name\": \"Sr.Pessoa\",\n    \"login\": \"pessoa@pessoa.com\",\n    \"password\": \"pessoa@pessoa.com\",\n    \"accessLevelId\": 1\n}",
+									"raw": "\n{\n    \"login\": \"pessoa@pessoa.com\",\n    \"password\": \"pessoa@pessoa.com\",\n    \"accessLevelId\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -711,12 +711,37 @@
 					"response": []
 				},
 				{
+					"name": "Get all filtered by categoryID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/articles?categoryId=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"articles"
+							],
+							"query": [
+								{
+									"key": "categoryId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get all filtered by category",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/api/articles?category=0",
+							"raw": "localhost:8080/api/articles?category=software",
 							"host": [
 								"localhost"
 							],
@@ -728,7 +753,42 @@
 							"query": [
 								{
 									"key": "category",
-									"value": "0"
+									"value": "software"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all filtered by authorId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImFjY2Vzc0xldmVsSWQiOjEsImlhdCI6MTYzMTE5Mjc0OSwiZXhwIjoxNjMxNzk3NTQ5fQ.OrYNQnftZvRBsPzjP28gQD9UDFco5YsBU1k0K86flYU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/articles?authorId=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"articles"
+							],
+							"query": [
+								{
+									"key": "authorId",
+									"value": "1"
 								}
 							]
 						}
@@ -751,7 +811,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/api/articles?author=0",
+							"raw": "localhost:8080/api/articles?authorId=1",
 							"host": [
 								"localhost"
 							],
@@ -762,8 +822,8 @@
 							],
 							"query": [
 								{
-									"key": "author",
-									"value": "0"
+									"key": "authorId",
+									"value": "1"
 								}
 							]
 						}
