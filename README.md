@@ -343,6 +343,7 @@
 
   Após o  serviço do banco de dados for iniciado, é feito o teste com healthcheck para garantir que está  no ar, sendo possível adicionar a condição à api. Garantindo que ela só seja iniciada quando o banco de dados estiver rodando como o esperado. Isso foi necessário pois para garantir a praticidade nos testes, foram criadas migrations e seeds. Eles só pode ser executados quando o banco de dados já tiver subido e em uma ordem conforme as relações das tabelas.
 
+  A porta do postgres, que apontada para 5432:5432, precisou ser alterada para 5431:5431 para evitar conflitos nos testes locais.
 ---
 
 <div id='Banco-de-dados'/>

@@ -343,6 +343,7 @@ A dockerfile was created to build a container with the api and install dependenc
 
 After the database service is started, the test is done with healthcheck to ensure that it is in the air, and it is possible to add the condition to the api. Ensuring that it only starts when the database is running as expected. This was necessary because to ensure practicality in the tests, migrations and seeds were created. They can only be executed when the database has already been moved up and in an order according to the table relationships.
 
+The postgres port, which pointed to 5432:5432, needed to be changed to 5431:5431 to avoid conflicts in local tests.
 ---
 
 <div id='data-base'/>
