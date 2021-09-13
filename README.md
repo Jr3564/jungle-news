@@ -34,7 +34,6 @@
 - [Containers](#Containers)
 - [Banco de dados](#Banco-de-dados)
     - [Estrutura](#Estrutura)
-- [Deploy](#Deploy)
 - [Testando localmente a aplicação](#Testando-localmentea-a-aplicação)
 - [Libraries](#Libraries)
 
@@ -385,9 +384,10 @@
      ```bash
      docker-compose up
      ```
+     - Ao fazer isso, será montado o container do banco de dados e da API. Será execultado as migrations e seeders.
      - Para parar precione ctrl + c .
      - Se quiser que rode em segundo plano, acrescente -d ao comando.
-  4. Pronto, a api já está rodando.
+  4. Pronto, a api já está rodando.   
   5.  Para desmontar as imagens.
      ```bash
      docker-compose down
