@@ -34,7 +34,6 @@
 - [Containers](#Containers)
 - [Data Base](#data-base)
     - [structure](#structure)
-- [Deploy](link do deploy)
 - [Testing locally](#testing-locally)
 - [Libraries](#Libraries)
 
@@ -385,6 +384,7 @@ A container was used, with Postgres that was already configured in the project. 
      ```bash
      docker-compose up
      ```
+     - Doing so will mount the database and API container. It will be run as migrations and seeders.
      - To stop, press ctrl + c .
      - To running in background, add -d to command.
   4. Perfect, the api is running
