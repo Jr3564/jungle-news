@@ -12,7 +12,6 @@ module.exports = class {
 
   getAll({ category, author, categoryId, authorId }) {
     const keysReturnByQuery = ["title", "summary", "category"];
-    console.log(category, author, categoryId, authorId);
     if (category || author) {
       return this._Model.getFilteredByCategoryOrAuthor(
         category,
