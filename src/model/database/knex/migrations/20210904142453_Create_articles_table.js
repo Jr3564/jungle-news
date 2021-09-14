@@ -1,7 +1,7 @@
 exports.up = function (knex) {
   return knex.schema.createTable("articles", (table) => {
     table.increments("art_id").primary();
-    table.string("art_title");
+    table.string("art_title").unique();
     table.text("art_paragraph");
     table.text("art_summary");
     table.text("art_body");
