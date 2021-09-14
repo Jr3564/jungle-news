@@ -1,9 +1,9 @@
 const model = require("../model");
-const { BadRequest } = require("./ErrorInstance.js");
+const CRUDService = require("./CRUDService");
 
-module.exports = class {
+module.exports = class extends CRUDService {
   constructor(accessLevelId) {
-    this._Model = new model.Articles();
+    super(new model.Articles());
     this._accessLevelId = accessLevelId;
     this._keysReturn = this._accessLevelId
       ? ["title", "summary", "firstParagraph", "body", "category"]
@@ -33,34 +33,13 @@ module.exports = class {
   }
 
   create(article) {
-    const fieldsAreMissing =
-      !article.title ||
-      !article.summary ||
-      !article.firstParagraph ||
-      !article.body ||
-      !article.categoryId ||
-      !article.authorId;
-
-    if (fieldsAreMissing) {
-      const errorMessage = `The ${
-        (!article.title && "title") ||
-        (!article.summary && "summary") ||
-        (!article.firstParagraph && "firstParagraph") ||
-        (!article.body && "body") ||
-        (!article.categoryId && "categoryId") ||
-        (!article.authorId && "authorId")
-      } key is is mandatory`;
-      throw new BadRequest(errorMessage);
-    }
-
-    return this._Model.create(article);
-  }
-
-  updateById(articleId, data) {
-    return this._Model.updateById(articleId, data);
-  }
-
-  deleteById(articleId) {
-    return this._Model.deleteById(articleId);
+    return this._create(article, [
+      "title",
+      "summary",
+      "firstParagraph",
+      "body",
+      "authorId",
+      "categoryId",
+    ]);
   }
 };

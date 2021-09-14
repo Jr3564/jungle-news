@@ -2,21 +2,28 @@ const model = require("../model");
 const Encrypter = require("./authFeatures/Encrypter");
 const TokenHandler = require("./authFeatures/TokenHandler");
 const { BadRequest, Unauthorized } = require("./ErrorInstance");
+const CRUDService = require("./CRUDService");
 
-module.exports = class {
+module.exports = class extends CRUDService {
   constructor() {
-    this.Model = new model.Users();
+    super(new model.Users());
   }
 
-  async signIn({ login, password }) {
-    if (!login || !password)
-      throw new BadRequest(
-        `The ${
-          (!login && "login") || (!password && "password")
-        } key is is mandatory`
-      );
+  async signIn(requestBody) {
+    const keysAreMissing = this.verifyRequiredKeys(
+      ["password", "login"],
+      requestBody
+    );
 
-    const [user] = (await this.Model.getByLogin(login)) || [];
+    if (keysAreMissing.length) {
+      const errorMessage = this.keysRequiredMessage(keysAreMissing);
+
+      throw new BadRequest(errorMessage);
+    }
+
+    const { login, password } = requestBody;
+
+    const [user] = (await this._Model.getByLogin(login)) || [];
 
     if (!user) throw new BadRequest("Email/password incorrect");
 
@@ -34,36 +41,28 @@ module.exports = class {
     return TokenHandler.tokenGenerate({ userId, accessLevelId }, secret);
   }
 
-  async getAll() {
-    return this.Model.getAll();
-  }
+  async create(requestBody) {
+    const keysAreMissing = this.verifyRequiredKeys(
+      ["name", "password", "login"],
+      requestBody
+    );
 
-  async create({ name, login, password }) {
-    if (!name || !login || !password)
-      throw new BadRequest(
-        `The ${
-          (!name && "name") || (!login && "login") || (!password && "password")
-        } key is is mandatory`
-      );
+    if (keysAreMissing.length) {
+      const errorMessage = this.keysRequiredMessage(keysAreMissing);
 
-    const encryptedPassword = Encrypter.hash(password);
+      throw new BadRequest(errorMessage);
+    }
 
-    const user = {
+    const password = Encrypter.hash(requestBody.password);
+
+    const { name, login } = requestBody;
+
+    const insertedUser = await this._Model.create({
       name,
       login,
-      password: encryptedPassword,
-    };
-
-    const insertedUser = await this.Model.create(user);
+      password,
+    });
 
     return insertedUser;
-  }
-
-  updateById(id, itemsToUpdate) {
-    return this.Model.updateById(id, itemsToUpdate);
-  }
-
-  deleteById(id) {
-    return this.Model.deleteById(id);
   }
 };
