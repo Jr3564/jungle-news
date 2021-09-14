@@ -39,7 +39,7 @@ module.exports = class extends CRUDModel {
       .select(returnKeys);
   }
 
-  getById(id, returnKeys) {
+  getById(id, returnKeys = []) {
     const matchId = (builder) => {
       builder.where("art_id", id);
     };
