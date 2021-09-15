@@ -5,9 +5,16 @@ module.exports = class extends CRUDService {
   constructor(accessLevelId) {
     super(new model.Articles());
     this._accessLevelId = accessLevelId;
-    this._keysReturn = this._accessLevelId
-      ? ["title", "summary", "firstParagraph", "body", "category"]
-      : ["title", "summary", "firstParagraph", "category"];
+    this.anonymousUserKeysReturn = [
+      "title",
+      "summary",
+      "firstParagraph",
+      "category",
+    ];
+    this.loggedUserKeysReturn = [...this.anonymousUserKeysReturn, "body"];
+    this.keysReturn = accessLevelId
+      ? this.loggedUserKeysReturn
+      : this.anonymousUserKeysReturn;
   }
 
   getAll({ category, author, categoryId, authorId }) {
@@ -25,21 +32,31 @@ module.exports = class extends CRUDService {
         keysReturnByQuery
       );
     }
-    return this._Model.getAll(this._keysReturn);
+    return this._Model.getAll(this.keysReturn);
   }
 
   getById(articleId) {
-    return this._Model.getById(articleId, this._keysReturn);
+    return this._Model.getById(articleId, this.keysReturn);
   }
 
-  create(article) {
-    return this._create(article, [
+  create({ title, summary, firstParagraph, body, authorId, categoryId }) {
+    return this._create(
+      { title, summary, firstParagraph, body, authorId, categoryId },
+      ["title", "summary", "body", "firstParagraph", "categoryId", "authorId"]
+    );
+  }
+
+  updateById(id, data) {
+    const expectedKeys = [
       "title",
       "summary",
       "firstParagraph",
+      "category",
       "body",
-      "authorId",
-      "categoryId",
-    ]);
+    ];
+
+    const cleanData = this.extractRequiredKeys(expectedKeys, data);
+
+    return this._updateById(id, cleanData);
   }
 };

@@ -10,16 +10,17 @@ module.exports = class extends CRUDService {
   }
 
   async signIn(requestBody) {
-    const keysAreMissing = this.verifyRequiredKeys(
+    this.getDifferenceBetweenArrays(
       ["password", "login"],
-      requestBody
+      Object.keys(requestBody),
+      (missingKeys) => {
+        if (missingKeys.length) {
+          const errorMessage = this.keysRequiredMessage(missingKeys);
+
+          throw new BadRequest(errorMessage);
+        }
+      }
     );
-
-    if (keysAreMissing.length) {
-      const errorMessage = this.keysRequiredMessage(keysAreMissing);
-
-      throw new BadRequest(errorMessage);
-    }
 
     const { login, password } = requestBody;
 
@@ -42,16 +43,17 @@ module.exports = class extends CRUDService {
   }
 
   async create(requestBody) {
-    const keysAreMissing = this.verifyRequiredKeys(
+    this.getDifferenceBetweenArrays(
       ["name", "password", "login"],
-      requestBody
+      Object.keys(requestBody),
+      (missingKeys) => {
+        if (missingKeys.length) {
+          const errorMessage = this.keysRequiredMessage(missingKeys);
+
+          throw new BadRequest(errorMessage);
+        }
+      }
     );
-
-    if (keysAreMissing.length) {
-      const errorMessage = this.keysRequiredMessage(keysAreMissing);
-
-      throw new BadRequest(errorMessage);
-    }
 
     const password = Encrypter.hash(requestBody.password);
 
@@ -64,5 +66,13 @@ module.exports = class extends CRUDService {
     });
 
     return insertedUser;
+  }
+
+  updateById(id, data) {
+    const expectedKeys = ["name", "password", "login"];
+
+    const cleanData = this.extractRequiredKeys(expectedKeys, data);
+
+    return this._updateById(id, cleanData);
   }
 };
