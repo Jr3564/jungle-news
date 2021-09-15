@@ -9,9 +9,10 @@ module.exports = class {
     return this._Model.getAll();
   }
 
-  verifyRequiredKeys(verifyKeys, obj) {
-    const objectKeys = Object.keys(obj);
-    return verifyKeys.filter((key) => !objectKeys.includes(key));
+  getDifferenceBetweenArrays(array, anotherArray, callback = () => {}) {
+    const items = array.filter((item) => !anotherArray.includes(item));
+    callback(items);
+    return items;
   }
 
   keysRequiredMessage(keys = []) {
@@ -21,21 +22,37 @@ module.exports = class {
     return `${missingKeys} ${keys.length > 1 ? "are" : "is"} required`;
   }
 
+  extractRequiredKeys(expectedKeys, obj) {
+    const dataKeys = Object.keys(obj);
+    const differences = this.getDifferenceBetweenArrays(dataKeys, expectedKeys);
+
+    return dataKeys.reduce(
+      (newObj, key) =>
+        differences.includes(key) ? newObj : { ...newObj, [key]: obj[key] },
+      {}
+    );
+  }
+
   _create(requestBody, keysRequired) {
-    const keysAreMissing = this.verifyRequiredKeys(keysRequired, requestBody);
+    this.getDifferenceBetweenArrays(
+      keysRequired,
+      Object.keys(requestBody),
+      (missingKeys) => {
+        if (missingKeys.length) {
+          const errorMessage = this.keysRequiredMessage(missingKeys);
 
-    if (keysAreMissing.length) {
-      const errorMessage = this.keysRequiredMessage(keysAreMissing);
-
-      throw new BadRequest(errorMessage);
-    }
+          throw new BadRequest(errorMessage);
+        }
+      }
+    );
 
     return this._Model.create(requestBody);
   }
 
-  async updateById(id, data) {
+  async _updateById(id, data) {
     if (!Object.keys(data).length) throw new BadRequest("'Body' is empty");
     const updated = await this._Model.updateById(id, data);
+
     if (!updated) throw new UnprocessableEntity("Id not found");
     return updated;
   }
