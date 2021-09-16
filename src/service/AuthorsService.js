@@ -6,16 +6,14 @@ module.exports = class extends CRUDService {
     super(new model.Authors());
   }
 
-  async create({ name, imagePath }) {
+  async create(requestBody) {
     const requiredKeys = ["name", "imagePath"];
-    return this._create({ name, imagePath }, requiredKeys);
+    return this._create(requestBody, requiredKeys);
   }
 
   updateById(id, data) {
     const expectedKeys = ["name", "imagePath"];
 
-    const cleanData = this.extractRequiredKeys(expectedKeys, data);
-
-    return this._updateById(id, cleanData);
+    return this._updateById(id, data, expectedKeys);
   }
 };

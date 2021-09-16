@@ -22,21 +22,26 @@ module.exports = class {
     return `${missingKeys} ${keys.length > 1 ? "are" : "is"} required`;
   }
 
-  extractRequiredKeys(expectedKeys, obj) {
+  extractExpectedKeys(expectedKeys, obj) {
     const dataKeys = Object.keys(obj);
     const differences = this.getDifferenceBetweenArrays(dataKeys, expectedKeys);
 
     return dataKeys.reduce(
       (newObj, key) =>
-        differences.includes(key) ? newObj : { ...newObj, [key]: obj[key] },
+        differences.includes(key) && obj[key]
+          ? newObj
+          : { ...newObj, [key]: obj[key] },
       {}
     );
   }
 
-  _create(requestBody, keysRequired) {
+  _create(requestBody, keysRequired, expectedKeys = []) {
+    const cleanData = expectedKeys.length
+      ? this.extractExpectedKeys(expectedKeys, requestBody)
+      : this.extractExpectedKeys(keysRequired, requestBody);
     this.getDifferenceBetweenArrays(
       keysRequired,
-      Object.keys(requestBody),
+      Object.keys(cleanData),
       (missingKeys) => {
         if (missingKeys.length) {
           const errorMessage = this.keysRequiredMessage(missingKeys);
@@ -46,20 +51,25 @@ module.exports = class {
       }
     );
 
-    return this._Model.create(requestBody);
+    return this._Model.create(cleanData);
   }
 
-  async _updateById(id, data) {
-    if (!Object.keys(data).length) throw new BadRequest("'Body' is empty");
-    const updated = await this._Model.updateById(id, data);
+  async _updateById(id, data, expectedKeys = []) {
+    const cleanData = expectedKeys.length
+      ? this.extractExpectedKeys(expectedKeys, data)
+      : data;
 
-    if (!updated) throw new UnprocessableEntity("Id not found");
+    if (!Object.keys(cleanData).length) throw new BadRequest("Invalid fields");
+
+    const updated = await this._Model.updateById(id, cleanData);
+
+    if (!updated) throw new UnprocessableEntity("Not found");
     return updated;
   }
 
   async deleteById(id) {
     const deleted = await this._Model.deleteById(id);
-    if (!deleted.length) throw new UnprocessableEntity("Id not found");
+    if (!deleted.length) throw new UnprocessableEntity("Not found");
     return deleted;
   }
 };

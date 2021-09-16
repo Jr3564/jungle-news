@@ -39,11 +39,16 @@ module.exports = class extends CRUDService {
     return this._Model.getById(articleId, this.keysReturn);
   }
 
-  create({ title, summary, firstParagraph, body, authorId, categoryId }) {
-    return this._create(
-      { title, summary, firstParagraph, body, authorId, categoryId },
-      ["title", "summary", "body", "firstParagraph", "categoryId", "authorId"]
-    );
+  create(requestBody) {
+    const expectedKeys = [
+      "title",
+      "summary",
+      "body",
+      "firstParagraph",
+      "categoryId",
+      "authorId",
+    ];
+    return this._create(requestBody, expectedKeys);
   }
 
   updateById(id, data) {
@@ -55,8 +60,6 @@ module.exports = class extends CRUDService {
       "body",
     ];
 
-    const cleanData = this.extractRequiredKeys(expectedKeys, data);
-
-    return this._updateById(id, cleanData);
+    return this._updateById(id, data, expectedKeys);
   }
 };
