@@ -12,6 +12,7 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development TOKEN_SECRET=top_secret nodemon --watch src --exec babel-node src/app.js",
+    "migrate": "cross-env NODE_ENV=development npx knex migrate:latest --knexfile='./src/model/database/knex/knexfile.js'",
     "start": "node src/app.js"
   },
   "devDependencies": {
