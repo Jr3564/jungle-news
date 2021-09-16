@@ -2,21 +2,30 @@ const model = require("../model");
 const Encrypter = require("./authFeatures/Encrypter");
 const TokenHandler = require("./authFeatures/TokenHandler");
 const { BadRequest, Unauthorized } = require("./ErrorInstance");
+const CRUDService = require("./CRUDService");
 
-module.exports = class {
-  constructor() {
-    this.Model = new model.Users();
+module.exports = class extends CRUDService {
+  constructor(accessLevelId) {
+    super(new model.Users());
+    this._accessLevelId = accessLevelId || -1;
   }
 
-  async signIn({ login, password }) {
-    if (!login || !password)
-      throw new BadRequest(
-        `The ${
-          (!login && "login") || (!password && "password")
-        } key is is mandatory`
-      );
+  async signIn(requestBody) {
+    this.getDifferenceBetweenArrays(
+      ["password", "login"],
+      Object.keys(requestBody),
+      (missingKeys) => {
+        if (missingKeys.length) {
+          const errorMessage = this.keysRequiredMessage(missingKeys);
 
-    const [user] = (await this.Model.getByLogin(login)) || [];
+          throw new BadRequest(errorMessage);
+        }
+      }
+    );
+
+    const { login, password } = requestBody;
+
+    const [user] = (await this._Model.getByLogin(login)) || [];
 
     if (!user) throw new BadRequest("Email/password incorrect");
 
@@ -34,36 +43,31 @@ module.exports = class {
     return TokenHandler.tokenGenerate({ userId, accessLevelId }, secret);
   }
 
-  async getAll() {
-    return this.Model.getAll();
-  }
+  async create(requestBody) {
+    const password = Encrypter.hash(requestBody.password);
 
-  async create({ name, login, password }) {
-    if (!name || !login || !password)
-      throw new BadRequest(
-        `The ${
-          (!name && "name") || (!login && "login") || (!password && "password")
-        } key is is mandatory`
-      );
+    const requiredKeys = ["name", "password", "login"];
+    const expectedKeys =
+      this._accessLevelId === 1
+        ? [...requiredKeys, "accessLevelId"]
+        : requiredKeys;
 
-    const encryptedPassword = Encrypter.hash(password);
-
-    const user = {
-      name,
-      login,
-      password: encryptedPassword,
-    };
-
-    const insertedUser = await this.Model.create(user);
+    const insertedUser = await this._create(
+      { ...requestBody, password },
+      requiredKeys,
+      expectedKeys
+    );
 
     return insertedUser;
   }
 
-  updateById(id, itemsToUpdate) {
-    return this.Model.updateById(id, itemsToUpdate);
-  }
+  updateById(id, data) {
+    const expectedKeysUser = ["name", "password", "login"];
+    const expectedKeys =
+      this._accessLevelId === 1
+        ? [...expectedKeysUser, "accessLevelId"]
+        : expectedKeysUser;
 
-  deleteById(id) {
-    return this.Model.deleteById(id);
+    return this._updateById(id, data, expectedKeys);
   }
 };

@@ -18,15 +18,13 @@ module.exports = class extends CRUDModel {
   }
 
   async create(newUser) {
-    const returnKeys = this.keysRename(
-      ["name", "id", "login", "accessLevelId"],
-      this.keysMap
-    );
-
-    return await this._Instance
-      .query()
-      .insert(this.mapAndTranslateKeys(newUser, this.keysMap))
-      .returning(...returnKeys);
+    const {
+      use_id: id,
+      use_name: name,
+      use_login: login,
+      access_level_id: accessLevelId,
+    } = await this._insert(this.mapAndTranslateKeys(newUser, this.keysMap));
+    return { id, name, login, accessLevelId };
   }
 
   getAll() {

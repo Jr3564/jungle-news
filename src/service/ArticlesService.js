@@ -1,13 +1,20 @@
 const model = require("../model");
-const { BadRequest } = require("./ErrorInstance.js");
+const CRUDService = require("./CRUDService");
 
-module.exports = class {
+module.exports = class extends CRUDService {
   constructor(accessLevelId) {
-    this._Model = new model.Articles();
+    super(new model.Articles());
     this._accessLevelId = accessLevelId;
-    this._keysReturn = this._accessLevelId
-      ? ["title", "summary", "firstParagraph", "body", "category"]
-      : ["title", "summary", "firstParagraph", "category"];
+    this.anonymousUserKeysReturn = [
+      "title",
+      "summary",
+      "firstParagraph",
+      "category",
+    ];
+    this.loggedUserKeysReturn = [...this.anonymousUserKeysReturn, "body"];
+    this.keysReturn = accessLevelId
+      ? this.loggedUserKeysReturn
+      : this.anonymousUserKeysReturn;
   }
 
   getAll({ category, author, categoryId, authorId }) {
@@ -25,42 +32,34 @@ module.exports = class {
         keysReturnByQuery
       );
     }
-    return this._Model.getAll(this._keysReturn);
+    return this._Model.getAll(this.keysReturn);
   }
 
   getById(articleId) {
-    return this._Model.getById(articleId, this._keysReturn);
+    return this._Model.getById(articleId, this.keysReturn);
   }
 
-  create(article) {
-    const fieldsAreMissing =
-      !article.title ||
-      !article.summary ||
-      !article.firstParagraph ||
-      !article.body ||
-      !article.categoryId ||
-      !article.authorId;
-
-    if (fieldsAreMissing) {
-      const errorMessage = `The ${
-        (!article.title && "title") ||
-        (!article.summary && "summary") ||
-        (!article.firstParagraph && "firstParagraph") ||
-        (!article.body && "body") ||
-        (!article.categoryId && "categoryId") ||
-        (!article.authorId && "authorId")
-      } key is is mandatory`;
-      throw new BadRequest(errorMessage);
-    }
-
-    return this._Model.create(article);
+  create(requestBody) {
+    const expectedKeys = [
+      "title",
+      "summary",
+      "body",
+      "firstParagraph",
+      "categoryId",
+      "authorId",
+    ];
+    return this._create(requestBody, expectedKeys);
   }
 
-  updateById(articleId, data) {
-    return this._Model.updateById(articleId, data);
-  }
+  updateById(id, data) {
+    const expectedKeys = [
+      "title",
+      "summary",
+      "firstParagraph",
+      "category",
+      "body",
+    ];
 
-  deleteById(articleId) {
-    return this._Model.deleteById(articleId);
+    return this._updateById(id, data, expectedKeys);
   }
 };

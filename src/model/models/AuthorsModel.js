@@ -15,8 +15,13 @@ module.exports = class extends CRUDModel {
     this.defaultReturnKeys = ["id", "name", "imagePath"];
   }
 
-  create(author) {
-    return this._insert(this.mapAndTranslateKeys(author, this.keysMap));
+  async create(author) {
+    const {
+      aut_id: id,
+      aut_name: name,
+      aut_image_path: imagePath,
+    } = await this._insert(this.mapAndTranslateKeys(author, this.keysMap));
+    return { id, name, imagePath };
   }
 
   getAll() {

@@ -1,30 +1,19 @@
 const model = require("../model");
-const { BadRequest } = require("./ErrorInstance");
+const CRUDService = require("./CRUDService");
 
-module.exports = class {
+module.exports = class extends CRUDService {
   constructor() {
-    this.Model = new model.Authors();
+    super(new model.Authors());
   }
 
-  async create({ name, imagePath }) {
-    if (!name || !imagePath)
-      throw new BadRequest(
-        `The ${
-          (!name && "name") || (!imagePath && "imagePath")
-        } key is is mandatory`
-      );
-    return this.Model.create({ name, imagePath });
-  }
-
-  getAll() {
-    return this.Model.getAll();
+  async create(requestBody) {
+    const requiredKeys = ["name", "imagePath"];
+    return this._create(requestBody, requiredKeys);
   }
 
   updateById(id, data) {
-    return this.Model.updateById(id, data);
-  }
+    const expectedKeys = ["name", "imagePath"];
 
-  deleteById(id) {
-    return this.Model.deleteById(id);
+    return this._updateById(id, data, expectedKeys);
   }
 };
