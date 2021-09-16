@@ -12,8 +12,11 @@ module.exports = class extends CRUDModel {
     };
     this.defaultReturnKeys = ["id", "name"];
   }
-  create(name) {
-    return this._insert(this.mapAndTranslateKeys({ name }, this.keysMap));
+  async create(categoryName) {
+    const { cat_id: id, cat_name: name } = await this._insert(
+      this.mapAndTranslateKeys({ name: categoryName.name }, this.keysMap)
+    );
+    return { id, name };
   }
 
   getAll() {

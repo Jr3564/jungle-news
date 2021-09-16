@@ -17,8 +17,14 @@ module.exports = class extends CRUDModel {
     this.defaultReturnKeys = ["title", "firstParagraph", "summary", "body"];
   }
 
-  create(data) {
-    return this._insert(this.mapAndTranslateKeys(data, this.keysMap));
+  async create(data) {
+    const {
+      art_id: id,
+      art_title: title,
+      category_id: categoryId,
+      author_id: authorId,
+    } = await this._insert(this.mapAndTranslateKeys(data, this.keysMap));
+    return { id, title, categoryId, authorId };
   }
 
   defaultQuery(returnKeys, queryBuilder = () => {}) {

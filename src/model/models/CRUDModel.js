@@ -14,10 +14,7 @@ module.exports = class {
   }
 
   _insert(item, returnKeys = ["*"]) {
-    return this._Instance
-      .query()
-      .insert(item)
-      .select(...returnKeys);
+    return this._Instance.query().insert(item).returning(returnKeys);
   }
   _getAll() {
     return this._Instance.query();
