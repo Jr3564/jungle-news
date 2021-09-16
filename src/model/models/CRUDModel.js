@@ -16,8 +16,8 @@ module.exports = class {
   _insert(item, returnKeys = ["*"]) {
     return this._Instance.query().insert(item).returning(returnKeys);
   }
-  _getAll() {
-    return this._Instance.query();
+  _getAll(returnKeys = ["*"]) {
+    return this._Instance.query().select(...returnKeys);
   }
   _getById(id, returnKeys = ["*"]) {
     return this._Instance
