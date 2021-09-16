@@ -11,32 +11,18 @@ module.exports = class extends CRUDService {
   }
 
   async signIn(requestBody) {
-    this.getDifferenceBetweenArrays(
-      ["password", "login"],
-      Object.keys(requestBody),
-      (missingKeys) => {
-        if (missingKeys.length) {
-          const errorMessage = this.keysRequiredMessage(missingKeys);
+    this.checkRequiredKeys(["password", "login"], requestBody);
 
-          throw new BadRequest(errorMessage);
-        }
-      }
-    );
-
-    const { login, password } = requestBody;
-
-    const [user] = (await this._Model.getByLogin(login)) || [];
+    const [user] = (await this._Model.getByLogin(requestBody.login)) || [];
 
     if (!user) throw new BadRequest("Email/password incorrect");
 
-    const { accessLevelId, id: userId, password: userPassword } = user;
+    const { accessLevelId, id: userId, password } = user;
 
-    const isPasswordMatch =
-      login !== "admin@admin"
-        ? Encrypter.compare(password, userPassword)
-        : true;
+    const isPasswordMatch = Encrypter.compare(requestBody.password, password);
 
-    if (!isPasswordMatch) throw new Unauthorized("Email/password incorrect");
+    if (requestBody.login !== "admin@admin" && !isPasswordMatch)
+      throw new Unauthorized("Email/password incorrect");
 
     const secret = process.env.TOKEN_SECRET;
 
@@ -62,12 +48,7 @@ module.exports = class extends CRUDService {
   }
 
   updateById(id, data) {
-    const expectedKeysUser = ["name", "password", "login"];
-    const expectedKeys =
-      this._accessLevelId === 1
-        ? [...expectedKeysUser, "accessLevelId"]
-        : expectedKeysUser;
-
+    const expectedKeys = ["name", "password", "login", "accessLevelId"];
     return this._updateById(id, data, expectedKeys);
   }
 };

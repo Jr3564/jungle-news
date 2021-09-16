@@ -5,8 +5,13 @@ module.exports = class {
     this._Model = Model;
   }
 
-  getAll() {
-    return this._Model.getAll();
+  getAll(returningKeys) {
+    return this._Model.getAll(returningKeys);
+  }
+
+  _getById(id, returnKeys) {
+    if (!id) throw new UnprocessableEntity("Not found");
+    return this._Model.getById(id, returnKeys);
   }
 
   getDifferenceBetweenArrays(array, anotherArray, callback = () => {}) {
@@ -20,6 +25,20 @@ module.exports = class {
       return `${word}, ${key}`;
     });
     return `${missingKeys} ${keys.length > 1 ? "are" : "is"} required`;
+  }
+
+  checkRequiredKeys(keysRequired, obj) {
+    return this.getDifferenceBetweenArrays(
+      keysRequired,
+      Object.keys(obj),
+      (missingKeys) => {
+        if (missingKeys.length) {
+          const errorMessage = this.keysRequiredMessage(missingKeys);
+
+          throw new BadRequest(errorMessage);
+        }
+      }
+    );
   }
 
   extractExpectedKeys(expectedKeys, obj) {
@@ -39,17 +58,8 @@ module.exports = class {
     const cleanData = expectedKeys.length
       ? this.extractExpectedKeys(expectedKeys, requestBody)
       : this.extractExpectedKeys(keysRequired, requestBody);
-    this.getDifferenceBetweenArrays(
-      keysRequired,
-      Object.keys(cleanData),
-      (missingKeys) => {
-        if (missingKeys.length) {
-          const errorMessage = this.keysRequiredMessage(missingKeys);
 
-          throw new BadRequest(errorMessage);
-        }
-      }
-    );
+    this.checkRequiredKeys(keysRequired, requestBody);
 
     return this._Model.create(cleanData);
   }
